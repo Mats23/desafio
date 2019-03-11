@@ -3,7 +3,7 @@ import {Atendimento} from "../models/Atendimento";
 import {Intervalo} from "../models/Intervalo";
 import * as moment from "moment";
 import {TipoEnum} from "../enum/TipoEnum";
-import {pipe} from "rxjs";
+import { Data } from "../models/Data";
 
 export class AtendimentoService extends AbstractDb {
 
@@ -17,24 +17,26 @@ export class AtendimentoService extends AbstractDb {
 
 
     createNewAtendimento(atendimento:Atendimento) {
-        atendimento.id = this.gerarId();
+        return atendimento.map(atendimento => { 
+            atendimento.id = this.gerarId();
 
-        if(atendimento.tipo === TipoEnum.diariamente) {
-            return this.cadastrarAtendimentoDiariamente(atendimento);
-        }
-
-        if(!this.validarData(atendimento.data.inicio,atendimento.data.fim)) { return 'Data invalida' }
-
-        if(this.verificarDisponibilidade(atendimento)) { return 'Horário preenchido'}
-
-
-        return this.createMethod('atendimento',atendimento);
+            if(atendimento.tipo === TipoEnum.diariamente) {
+                return this.cadastrarAtendimentoDiariamente(atendimento);
+            }
+    
+            if(!this.validarData(atendimento.data.inicio,atendimento.data.fim)) { return 'Data invalida' }
+    
+            if(this.verificarDisponibilidade(atendimento)) { return 'Horário preenchido'}
+    
+    
+            return this.createMethod('atendimento',atendimento);
+        });
+       
     }
 
 
 
     remover(dia:string) {
-        console.dir(dia);
         return this.removeAtendimentoMethod(dia);
     }
 
@@ -44,11 +46,9 @@ export class AtendimentoService extends AbstractDb {
         this.atendimentoList.filter(atendimento => { 
              return atendimento.data !== undefined})
         .map(atendimento => {
-            console.dir(intervalo);
             const inicio = moment(intervalo.inicio,'DD-MM-YYYY');
             const fim = moment(intervalo.fim,'DD-MM-YYYY');
             const datas = moment(atendimento.data.inicio,'DD-MM-YYYY');
-            console.dir(datas.isBetween(inicio,fim));
             if(datas.isBetween(inicio,fim) || datas.isSame(inicio) || datas.isSame(fim)) {
                 this.datas.push(atendimento);
         }});
@@ -94,7 +94,6 @@ export class AtendimentoService extends AbstractDb {
         const result = intervalosDb.map(horaDb => { 
             return  intervalos.filter(hora => { return horaDb === hora }).values().next().value;
         });
-        console.dir(result.find(a => { return a !== undefined }) === undefined);
         return result.find(a => { return a !== undefined }) === undefined;
        
     }
@@ -111,7 +110,7 @@ export class AtendimentoService extends AbstractDb {
 
     private verificarDisponibilidade(atendimento:Atendimento) {
         this.atendimentoList = this.getDiaDisponiveisMethod();
-        if(this.atendimentoList.length === 0) {
+        if(this.atendimentoList  === undefined) {
             return false;
         }
         const result = this.atendimentoList.map(atendimentoDb => {
@@ -124,7 +123,6 @@ export class AtendimentoService extends AbstractDb {
             const retorno =  this.atendimentoList
             .filter(data => { return data.data !== undefined; })
             .map((dataInicio) => {
-                console.dir(atendimento.data.inicio)
                  return  moment(dataInicio.data.inicio,'DD-MM-YYYY').isSame(moment(atendimento.data.inicio,'DD-MM-YYYY'))
             });
             return retorno.indexOf(true) !== -1;

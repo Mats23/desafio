@@ -20,7 +20,7 @@ export class AbstractDb {
         return this.db.get(path).find(info).value();
     }
 
-    createMethod(entity:string,atendimento:Atendimento):Atendimento {
+    createMethod(entity:string,atendimento:Atendimento):Atendimento[] {
         return this.db.get(entity).push(atendimento).write();
 
     }

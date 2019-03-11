@@ -1,8 +1,8 @@
-import {Path, GET, PathParam, POST, FormParam, QueryParam, Param, DELETE} from 'typescript-rest';
-import {AbstractDb} from "../db/AbstractDb";
+import {Path, GET, POST, DELETE} from 'typescript-rest';
 import { Atendimento } from '../models/Atendimento';
 import { Intervalo } from "../models/Intervalo";
 import { AtendimentoService } from '../service/AtendimentoService';
+import { Data } from '../models/Data';
 
 
 @Path('/atendimento')
@@ -18,7 +18,7 @@ export class AtendimentoController  {
     }
 
     @POST
-    createAtendimento(atendimento:Atendimento):Atendimento | string {
+    createAtendimento(atendimento:Atendimento):Atendimento[] | string {
         return this.atendimentoService.createNewAtendimento(atendimento);
     }
 

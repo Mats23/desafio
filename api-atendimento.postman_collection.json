@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "099e4fa6-70cf-487a-902f-7cc0e176a923",
+		"name": "api-atendimento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:4200/atendimento/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4200/atendimento/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"atendimento",
+						""
+					]
+				},
+				"description": "Traz todos os atendimentos"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4200/atendimento/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"atendimento",
+								""
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "http://localhost:4200/atendimento/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t\n\t{\n\t\t\t\"data\": {\n        \"inicio\": \"20-04-2019\",\n        \"fim\": \"20-04-2019\"\n      },\n        \"tipo\": \"especifico\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"14:30\",\n                \"fim\": \"16:00\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\"data\": {\n        \"inicio\": \"21-04-2019\",\n        \"fim\": \"21-04-2019\"\n      },\n        \"tipo\": \"especifico\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"14:30\",\n                \"fim\": \"16:00\"\n            },\n            {\n                \"inicio\": \"17:30\",\n                \"fim\": \"18:00\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\"data\": {\n        \"inicio\": \"22-04-2019\",\n        \"fim\": \"22-04-2019\"\n      },\n        \"tipo\": \"especifico\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"08:30\",\n                \"fim\": \"9:00\"\n            },\n            {\n                \"inicio\": \"12:25\",\n                \"fim\": \"12:50\"\n            },\n            {\n                \"inicio\": \"13:30\",\n                \"fim\": \"14:00\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\"data\": {\n        \"inicio\": \"23-04-2019\",\n        \"fim\": \"23-04-2019\"\n      },\n        \"tipo\": \"especifico\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"14:30\",\n                \"fim\": \"16:00\"\n            },\n            {\n                \"inicio\": \"09:30\",\n                \"fim\": \"10:00\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\"data\": {\n        \"inicio\": \"24-04-2019\",\n        \"fim\": \"24-04-2019\"\n      },\n        \"tipo\": \"especifico\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"18:30\",\n                \"fim\": \"21:00\"\n            },\n            {\n                \"inicio\": \"17:30\",\n                \"fim\": \"19:00\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\"data\": {\n        \"inicio\": \"25-04-2019\",\n        \"fim\": \"30-04-2019\"\n      },\n        \"tipo\": \"semanalmente\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"12:00\",\n                \"fim\": \"13:30\"\n            }\n           \n            \n            ]\n\t},\n\t{\n\t\t\t\n\n        \"tipo\": \"diariamente\",\n        \"intervalos\": [\n            {\n                \"inicio\": \"17:00\",\n                \"fim\": \"18:30\"\n            }\n           \n            \n            ]\n\t}\n\n\t\n\t\t\n\t\t\n\t\n     \n]"
+				},
+				"url": {
+					"raw": "http://localhost:4200/atendimento/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"atendimento",
+						""
+					]
+				},
+				"description": "cria novos atendimentos"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4200/atendimento/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"atendimento",
+								""
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "http://localhost:4200/atendimento/remover",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"data\":{\n\t\t\"inicio\":\"20-04-2019\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4200/atendimento/remover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"atendimento",
+						"remover"
+					]
+				},
+				"description": "apaga o atendimento enviando a data escolhida"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4200/atendimento/remover",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"atendimento",
+								"remover"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "http://localhost:4200/atendimento/consultar-atendimento",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\t\t\"inicio\":\"21-04-2019\",\n\t\t\t\"fim\":\"25-04-2019\"\n\t\n\t\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4200/atendimento/consultar-atendimento",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"atendimento",
+						"consultar-atendimento"
+					]
+				},
+				"description": "traz todas as datas no intervalo determinado"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4200/atendimento/consultar-atendimento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4200",
+							"path": [
+								"atendimento",
+								"consultar-atendimento"
+							]
+						}
+					},
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2a731e42-65dc-4a90-80c2-9cc46dd7f277",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c2cd1739-e564-4374-b3d2-5979dffe4800",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
