@@ -17,12 +17,16 @@ export class AtendimentoService extends AbstractDb {
 
 
     createNewAtendimento(atendimento:Atendimento) {
+        atendimento.id = this.gerarId();
+
+        if(atendimento.tipo === TipoEnum.diariamente) {
+            return this.cadastrarAtendimentoDiariamente(atendimento);
+        }
 
         if(!this.validarData(atendimento.data.inicio,atendimento.data.fim)) { return 'Data invalida' }
 
         if(this.verificarDisponibilidade(atendimento)) { return 'Horário preenchido'}
 
-        atendimento.id = this.gerarId();
 
         return this.createMethod('atendimento',atendimento);
     }
@@ -37,12 +41,14 @@ export class AtendimentoService extends AbstractDb {
 
     getAtendimentoFilter(intervalo:Intervalo) {
         this.atendimentoList = this.getDiaDisponiveisMethod();
-        this.atendimentoList.forEach(atendimento => {
-
+        this.atendimentoList.filter(atendimento => { 
+             return atendimento.data !== undefined})
+        .map(atendimento => {
+            console.dir(intervalo);
             const inicio = moment(intervalo.inicio,'DD-MM-YYYY');
             const fim = moment(intervalo.fim,'DD-MM-YYYY');
             const datas = moment(atendimento.data.inicio,'DD-MM-YYYY');
-            console.dir(intervalo);
+            console.dir(datas.isBetween(inicio,fim));
             if(datas.isBetween(inicio,fim) || datas.isSame(inicio) || datas.isSame(fim)) {
                 this.datas.push(atendimento);
         }});
@@ -68,17 +74,66 @@ export class AtendimentoService extends AbstractDb {
         return false;
     }
 
+    private verificarHora(atendimento:Atendimento) {
 
+        let intervalosDb = [];
+        let intervalos = [];
+        
+        this.atendimentoList = this.getDiaDisponiveisMethod();
+
+        this.atendimentoList.map(atendimentoDb => {
+            atendimentoDb.intervalos.map(atendimento => {
+                intervalosDb.push(atendimento.inicio);
+            });
+        });
+
+        atendimento.intervalos.map(atendimento => {
+            intervalos.push(atendimento.inicio);
+        });
+
+        const result = intervalosDb.map(horaDb => { 
+            return  intervalos.filter(hora => { return horaDb === hora }).values().next().value;
+        });
+        console.dir(result.find(a => { return a !== undefined }) === undefined);
+        return result.find(a => { return a !== undefined }) === undefined;
+       
+    }
+
+    private cadastrarAtendimentoDiariamente(atendimento:Atendimento) {
+        
+        if(this.verificarHora(atendimento)) {
+            return this.createMethod('atendimento',atendimento);
+        }
+
+        return 'Horário preenchido';
+                 
+    }
 
     private verificarDisponibilidade(atendimento:Atendimento) {
-        
         this.atendimentoList = this.getDiaDisponiveisMethod();
         if(this.atendimentoList.length === 0) {
             return false;
         }
-        const retorno =  this.atendimentoList.map((dataInicio) => {
-             return  moment(dataInicio.data.inicio,'DD-MM-YYYY').isSame(moment(atendimento.data.inicio,'DD-MM-YYYY'))
+        const result = this.atendimentoList.map(atendimentoDb => {
+            if(atendimento.tipo === TipoEnum.diariamente) {
+                return this.verificarHora(atendimento);
+            }
         });
-       return retorno.indexOf(true) !== -1;
+
+        if(result) {
+            const retorno =  this.atendimentoList
+            .filter(data => { return data.data !== undefined; })
+            .map((dataInicio) => {
+                console.dir(atendimento.data.inicio)
+                 return  moment(dataInicio.data.inicio,'DD-MM-YYYY').isSame(moment(atendimento.data.inicio,'DD-MM-YYYY'))
+            });
+            return retorno.indexOf(true) !== -1;
+
+        }
+        
+
+        
+      
+
     }
 }
