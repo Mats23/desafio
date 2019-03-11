@@ -3,7 +3,6 @@ import {Atendimento} from "../models/Atendimento";
 import {Intervalo} from "../models/Intervalo";
 import * as moment from "moment";
 import {TipoEnum} from "../enum/TipoEnum";
-import { Data } from "../models/Data";
 
 export class AtendimentoService extends AbstractDb {
 

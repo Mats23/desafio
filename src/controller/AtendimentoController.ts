@@ -2,7 +2,6 @@ import {Path, GET, POST, DELETE} from 'typescript-rest';
 import { Atendimento } from '../models/Atendimento';
 import { Intervalo } from "../models/Intervalo";
 import { AtendimentoService } from '../service/AtendimentoService';
-import { Data } from '../models/Data';
 
 
 @Path('/atendimento')
@@ -30,7 +29,7 @@ export class AtendimentoController  {
 
     @POST
     @Path('consultar-atendimento')
-    consultarAtendimentos(intervalo:Intervalo) {
+    searchAtendimentos(intervalo:Intervalo) {
         
         return this.atendimentoService.getAtendimentoFilter(intervalo); 
 
