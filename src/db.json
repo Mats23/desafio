@@ -1,5 +1,26 @@
 {
   "atendimento": [
-    
+    {
+      "data": "29-04-2019",
+      "tipo": "especifico",
+      "intervalos": [
+        {
+          "inicio": "09:30",
+          "fim": "11:00"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "tipo": "diario",
+      "intervalos": [
+        {
+          "inicio": "09:31",
+          "fim": "11:00"
+        }
+      ],
+      "id": 2,
+      "data": "Invalid date"
+    }
   ]
 }

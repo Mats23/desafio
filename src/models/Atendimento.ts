@@ -3,7 +3,8 @@ import {TipoEnum} from "../enum/TipoEnum";
 
 export class Atendimento {
     id:number;
-    data:Intervalo;
+    data:string;
+    dia:DiaDaSemanaEnum[];
     tipo:TipoEnum;
-    intervalos:Intervalo;
+    intervalos:Intervalo[];
 }

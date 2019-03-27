@@ -1,5 +1,5 @@
 export enum TipoEnum {
     especifico = 'especifico',
-    diariamente = 'diariamente',
-    semanalmente = 'semanalmente'
+    diario = 'diario',
+    semanal = 'semanal'
 }

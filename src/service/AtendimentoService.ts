@@ -1,12 +1,16 @@
 import {AbstractDb} from "../db/AbstractDb";
-import {Atendimento} from "../models/Atendimento";
+import  {Atendimento } from "../models/Atendimento";
 import {Intervalo} from "../models/Intervalo";
 import * as moment from "moment";
+import * as MomentRange from "moment-range";
 import {TipoEnum} from "../enum/TipoEnum";
 
 export class AtendimentoService extends AbstractDb {
 
     private atendimentoList: Atendimento[] = [];
+    private atendimentoDb: Atendimento;
+    private moment = MomentRange.extendMoment(moment);
+
     private datas:Atendimento[] = [];
 
     getAll() {
@@ -15,23 +19,28 @@ export class AtendimentoService extends AbstractDb {
 
 
 
-    createNewAtendimento(atendimento:Atendimento) {
-        return atendimento.map(atendimento => { 
-            atendimento.id = this.gerarId();
+    createNewAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
+        atendimento.id = this.gerarId();
 
-            if(atendimento.tipo === TipoEnum.diariamente) {
-                return this.cadastrarAtendimentoDiariamente(atendimento);
-            }
+        if(atendimento.tipo === TipoEnum.especifico && !this.validarData(atendimento.data)) {
+                return 'Data invalida'
+        }
     
-            if(!this.validarData(atendimento.data.inicio,atendimento.data.fim)) { return 'Data invalida' }
+        if(atendimento.tipo === TipoEnum.especifico && this.verificarDisponibilidade(atendimento)!== undefined) { 
+            return 'Dia preenchido' 
+        }
+        if(this.horaValida(atendimento) > 0) {
+            return 'Hora Já preenchida';
+        }     
+        atendimento.data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY');
+
     
-            if(this.verificarDisponibilidade(atendimento)) { return 'Horário preenchido'}
-    
-    
-            return this.createMethod('atendimento',atendimento);
-        });
+
+        return this.createMethod('atendimento',atendimento);
+     
        
     }
+
 
 
 
@@ -62,12 +71,12 @@ export class AtendimentoService extends AbstractDb {
         return novoId;
     }
 
-    private validarData(dataInicio:string, dataFim:string):boolean {
-        if(moment(dataInicio, "DD-MM-YYYY").isBefore(Date.now())) {
+    private validarData(data:string):boolean {
+        if(moment(data, "DD-MM-YYYY").isBefore(Date.now())) {
             return false ;
 
         }
-        if(moment(dataInicio, "DD-MM-YYYY").isValid() &&  moment(dataFim, "DD-MM-YYYY").isValid()) {
+        if(moment(data, "DD-MM-YYYY").isValid()) {
             return true;
         }
         return false;
@@ -108,29 +117,29 @@ export class AtendimentoService extends AbstractDb {
     }
 
     private verificarDisponibilidade(atendimento:Atendimento) {
-        this.atendimentoList = this.getDiaDisponiveisMethod();
-        if(this.atendimentoList  === undefined) {
-            return false;
-        }
-        const result = this.atendimentoList.map(atendimentoDb => {
-            if(atendimento.tipo === TipoEnum.diariamente) {
-                return this.verificarHora(atendimento);
-            }
-        });
+        const data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY')
+        return this.findByDataMethod(data);
+                
+    }
 
-        if(result) {
-            const retorno =  this.atendimentoList
-            .filter(data => { return data.data !== undefined; })
-            .map((dataInicio) => {
-                 return  moment(dataInicio.data.inicio,'DD-MM-YYYY').isSame(moment(atendimento.data.inicio,'DD-MM-YYYY'))
-            });
-            return retorno.indexOf(true) !== -1;
-
+    private horaValida(atendimento:Atendimento) {
+        let result = 0;
+        if(atendimento.tipo === TipoEnum.diario) {
+            const atendimentoList = this.getAllMethod();
+            atendimentoList.map(atendimentodb => {
+                atendimento.intervalos.map(hora => {
+                    console.dir(atendimentodb.intervalos);
+                    result = this.getIntervalosMethod(hora.inicio,hora.fim).length;
+                })
+            })
+        } else if(atendimento.tipo === TipoEnum.semanal) {
+            const atendimentoList = this.getTipoMethod(TipoEnum.diario);
+            atendimentoList.forEach(hora => {
+                result = this.getIntervalosMethod(hora.inicio,hora.fim).length;
+            })
         }
         
-
+        return result
         
-      
-
     }
 }

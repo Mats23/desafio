@@ -17,9 +17,15 @@ export class AtendimentoController  {
     }
 
     @POST
-    createAtendimento(atendimento:Atendimento):Atendimento[] | string {
-        return this.atendimentoService.createNewAtendimento(atendimento);
+    createAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
+        return this.atendimentoService.createNewAtendimentoEspecifico(atendimento);
     }
+
+    // @POST
+    // @Path('dairio')
+    // createAtendimentoDiario(atendimento:AtendimentoEspecifico):AtendimentoEspecifico | string {
+    //     return this.atendimentoService.createNewAtendimentoDiario(atendimento);
+    // }
 
     @DELETE
     @Path('remover')
