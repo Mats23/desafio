@@ -29,7 +29,7 @@ export class AtendimentoService extends AbstractDb {
         if(atendimento.tipo === TipoEnum.especifico && this.verificarDisponibilidade(atendimento)!== undefined) { 
             return 'Dia preenchido' 
         }
-        if(this.horaValida(atendimento) > 0) {
+        if(this.horaValida(atendimento)) {
             return 'Hora Já preenchida';
         }     
         atendimento.data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY');
@@ -123,23 +123,25 @@ export class AtendimentoService extends AbstractDb {
     }
 
     private horaValida(atendimento:Atendimento) {
-        let result = 0;
-        if(atendimento.tipo === TipoEnum.diario) {
-            const atendimentoList = this.getAllMethod();
-            atendimentoList.map(atendimentodb => {
-                atendimento.intervalos.map(hora => {
-                    console.dir(atendimentodb.intervalos);
-                    result = this.getIntervalosMethod(hora.inicio,hora.fim).length;
-                })
-            })
-        } else if(atendimento.tipo === TipoEnum.semanal) {
-            const atendimentoList = this.getTipoMethod(TipoEnum.diario);
-            atendimentoList.forEach(hora => {
-                result = this.getIntervalosMethod(hora.inicio,hora.fim).length;
-            })
+        const listDb = this.getAllMethod();
+        if( listDb === undefined) {
+            return;
         }
-        
-        return result
+       const teste =  atendimento.intervalos.map(intervalo => {
+            return listDb.map(atendimentoDb => {
+                return  atendimentoDb.intervalos.map(intervaloDb => {
+                    let inicioDb = moment(intervaloDb.inicio,'HH:mm');
+                    let fimDb = moment(intervaloDb.fim,'HH:mm');       
+                    return this.moment.range(inicioDb,fimDb).contains(moment(intervalo.inicio,'HH:mm')) || this.moment.range(inicioDb,fimDb).contains(moment(intervalo.fim,'HH:mm'));
+                })
+                
+            });
+        }).reduce(reducer => { return reducer})
+            .reduce(reducer => { return reducer})
+                .reduce(reducer => { return reducer});
+            
+        console.dir(teste);
+        return teste;
         
     }
 }

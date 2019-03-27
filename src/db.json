@@ -15,11 +15,26 @@
       "tipo": "diario",
       "intervalos": [
         {
-          "inicio": "09:31",
-          "fim": "11:00"
+          "inicio": "08:31",
+          "fim": "09:00"
         }
       ],
       "id": 2,
+      "data": "Invalid date"
+    },
+    {
+      "tipo": "semanal",
+      "dia": [
+        "segunda",
+        "quarta"
+      ],
+      "intervalos": [
+        {
+          "inicio": "11:10",
+          "fim": "12:00"
+        }
+      ],
+      "id": 3,
       "data": "Invalid date"
     }
   ]

@@ -19,6 +19,7 @@ export class AbstractDb {
     }
     getIntervalosMethod(inicio,fim) {
         return this.db.get('atendimento').filter({intervalos:[{inicio:inicio}]}).value();
+
     }
     getTipoMethod(tipo) {
         return this.db.get('atendimento').filter({tipo:tipo}).value();
