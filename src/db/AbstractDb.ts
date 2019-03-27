@@ -41,8 +41,8 @@ export class AbstractDb {
         return this.db.get(entity).size().value();
     }
 
-    removeAtendimentoMethod(data) {
-        return this.db.get('atendimento').remove(data).write();
+    removeAtendimentoMethod(id) {
+        return this.db.get('atendimento').remove(id).write();
     }
 
     getDiaDisponiveisMethod() {

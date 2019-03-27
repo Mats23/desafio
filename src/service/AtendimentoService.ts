@@ -14,13 +14,18 @@ export class AtendimentoService extends AbstractDb {
     private datas:Atendimento[] = [];
 
     getAll() {
-        return this.getAllMethod('atendimento');
+        return this.getAllMethod();
     }
-
-
 
     createNewAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
         atendimento.id = this.gerarId();
+        if(this.getAll().length === 0 ) {
+            return this.createMethod('atendimento',atendimento);
+        }
+        if(atendimento.tipo === TipoEnum.especifico) {
+            atendimento.data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY');
+
+        }
 
         if(atendimento.tipo === TipoEnum.especifico && !this.validarData(atendimento.data)) {
                 return 'Data invalida'
@@ -32,20 +37,13 @@ export class AtendimentoService extends AbstractDb {
         if(this.horaValida(atendimento)) {
             return 'Hora Já preenchida';
         }     
-        atendimento.data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY');
 
-    
-
-        return this.createMethod('atendimento',atendimento);
-     
-       
+        return this.createMethod('atendimento',atendimento);   
     }
 
 
-
-
-    remover(dia:string) {
-        return this.removeAtendimentoMethod(dia);
+    remover(id:string) {
+        return this.removeAtendimentoMethod(id);
     }
 
 
@@ -56,7 +54,7 @@ export class AtendimentoService extends AbstractDb {
         .map(atendimento => {
             const inicio = moment(intervalo.inicio,'DD-MM-YYYY');
             const fim = moment(intervalo.fim,'DD-MM-YYYY');
-            const datas = moment(atendimento.data.inicio,'DD-MM-YYYY');
+            const datas = moment(atendimento.data,'DD-MM-YYYY');
             if(datas.isBetween(inicio,fim) || datas.isSame(inicio) || datas.isSame(fim)) {
                 this.datas.push(atendimento);
         }});
@@ -82,39 +80,6 @@ export class AtendimentoService extends AbstractDb {
         return false;
     }
 
-    private verificarHora(atendimento:Atendimento) {
-
-        let intervalosDb = [];
-        let intervalos = [];
-        
-        this.atendimentoList = this.getDiaDisponiveisMethod();
-
-        this.atendimentoList.map(atendimentoDb => {
-            atendimentoDb.intervalos.map(atendimento => {
-                intervalosDb.push(atendimento.inicio);
-            });
-        });
-
-        atendimento.intervalos.map(atendimento => {
-            intervalos.push(atendimento.inicio);
-        });
-
-        const result = intervalosDb.map(horaDb => { 
-            return  intervalos.filter(hora => { return horaDb === hora }).values().next().value;
-        });
-        return result.find(a => { return a !== undefined }) === undefined;
-       
-    }
-
-    private cadastrarAtendimentoDiariamente(atendimento:Atendimento) {
-        
-        if(this.verificarHora(atendimento)) {
-            return this.createMethod('atendimento',atendimento);
-        }
-
-        return 'Horário preenchido';
-                 
-    }
 
     private verificarDisponibilidade(atendimento:Atendimento) {
         const data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY')
@@ -127,7 +92,7 @@ export class AtendimentoService extends AbstractDb {
         if( listDb === undefined) {
             return;
         }
-       const teste =  atendimento.intervalos.map(intervalo => {
+       return atendimento.intervalos.map(intervalo => {
             return listDb.map(atendimentoDb => {
                 return  atendimentoDb.intervalos.map(intervaloDb => {
                     let inicioDb = moment(intervaloDb.inicio,'HH:mm');
@@ -139,9 +104,6 @@ export class AtendimentoService extends AbstractDb {
         }).reduce(reducer => { return reducer})
             .reduce(reducer => { return reducer})
                 .reduce(reducer => { return reducer});
-            
-        console.dir(teste);
-        return teste;
-        
+                    
     }
 }

@@ -1,7 +1,7 @@
 {
   "atendimento": [
     {
-      "data": "29-04-2019",
+      "data": "27-04-2019",
       "tipo": "especifico",
       "intervalos": [
         {
@@ -12,30 +12,26 @@
       "id": 1
     },
     {
-      "tipo": "diario",
+      "data": "28-04-2019",
+      "tipo": "especifico",
       "intervalos": [
         {
-          "inicio": "08:31",
-          "fim": "09:00"
+          "inicio": "13:30",
+          "fim": "14:00"
         }
       ],
-      "id": 2,
-      "data": "Invalid date"
+      "id": 2
     },
     {
-      "tipo": "semanal",
-      "dia": [
-        "segunda",
-        "quarta"
-      ],
+      "data": "29-04-2019",
+      "tipo": "especifico",
       "intervalos": [
         {
-          "inicio": "11:10",
-          "fim": "12:00"
+          "inicio": "14:30",
+          "fim": "15:00"
         }
       ],
-      "id": 3,
-      "data": "Invalid date"
+      "id": 3
     }
   ]
 }
