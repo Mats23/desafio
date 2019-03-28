@@ -7,28 +7,13 @@ export class AbstractDb {
     db:lowdb = lowdb(this.adapter);
     constructor() {}
 
-    getMethod(path,data) {
-        return this.db.get(path).push(data).write();
-    }
-
     getAllMethod() {
         return this.db.get('atendimento').value();
     }
-    getAllIntervalosMethod(path) {
-        return this.db.get(path).map('intervalos').value();
-    }
-    
+      
     getIntervalosMethod(intervalos) {
         return this.db.get('atendimento').filter({intervalos:intervalos}).value();
 
-    }
-
-    getBetweenIntervalos(inicio,fim) {
-        return this.db.get('atendimento').filter(inicio).filter(fim).value();
-
-    }
-    getTipoMethod(tipo) {
-        return this.db.get('atendimento').filter({tipo:tipo}).value();
     }
 
     findByDataMethod(info) {
@@ -40,7 +25,6 @@ export class AbstractDb {
             this.db.defaults({atendimento:[]}).write();
         }
         return this.db.get(entity).push(atendimento).write();
-
     }
 
     getLength(entity) {

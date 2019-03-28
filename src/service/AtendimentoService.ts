@@ -17,9 +17,9 @@ export class AtendimentoService extends AbstractDb {
         return this.getAllMethod();
     }
 
-    createNewAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
+    createNewAtendimento(atendimento:Atendimento):Atendimento | string {
         atendimento.id = this.gerarId();
-        if(this.getAll() === undefined ) {
+        if(this.getAll() === undefined || this.getAll().length === 0) {
             return this.createMethod('atendimento',atendimento);
         }
         if(atendimento.tipo === TipoEnum.especifico) {
@@ -79,6 +79,7 @@ export class AtendimentoService extends AbstractDb {
         }
         return false;
     }
+
 
 
     private verificarDisponibilidade(atendimento:Atendimento) {

@@ -11,14 +11,14 @@ export class AtendimentoController  {
 
 
     @GET
-    getAtendimento() {
+    getAtendimento():Atendimento[] {
         return this.atendimentoService.getAll();
 
     }
 
     @POST
-    createAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
-        return this.atendimentoService.createNewAtendimentoEspecifico(atendimento);
+    createAtendimento(atendimento:Atendimento):Atendimento | string {
+        return this.atendimentoService.createNewAtendimento(atendimento);
     }
 
 
@@ -31,7 +31,6 @@ export class AtendimentoController  {
     @POST
     @Path('consultar-atendimento')
     searchAtendimentos(intervalo:Intervalo) {
-        
         return this.atendimentoService.getAtendimentoFilter(intervalo); 
 
 

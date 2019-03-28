@@ -12,11 +12,5 @@ describe('buscar todos', ()=> {
             
             });
         });
-        it('o body deve conter todos os atendimentos', ()=> {
-            request.request(base_url, (error, response, body)=> {
-                expect(body).toBe(Atendimento)
-                done();
-            })
-        })
     });
 });

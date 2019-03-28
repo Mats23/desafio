@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:4200/atendimento/",
+			"name": "Buscar Todos",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -63,7 +63,7 @@
 			]
 		},
 		{
-			"name": "atendimento especifico",
+			"name": "Atendimento Especifico",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -76,7 +76,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n\t\t\"data\": \"24-04-2019\",\n    \"tipo\": \"especifico\",\n    \"intervalos\": [\n        {\n            \"inicio\": \"15:30\",\n            \"fim\": \"17:00\"\n        }\n       \n        \n        ]\n}\n\t\n\t\t\n     \n"
+					"raw": "\n{\n\t\t\"data\": \"28-04-2019\",\n    \"tipo\": \"especifico\",\n    \"intervalos\": [\n        {\n                \"inicio\": \"09:30\",\n                \"fim\": \"11:00\"\n        }\n        \n        ]\n}\n\t\n\t\t\n     \n"
 				},
 				"url": {
 					"raw": "http://localhost:4200/atendimento/",
@@ -124,7 +124,7 @@
 			]
 		},
 		{
-			"name": "atendimento diario",
+			"name": "Atendimento Diario",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -137,7 +137,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n    \"tipo\": \"diario\",\n    \"intervalos\": [\n        {\n            \"inicio\": \"09:31\",\n            \"fim\": \"11:00\"\n        }\n        \n       \n        \n        ]\n}\n\t\n\t\t\n     \n"
+					"raw": "\n{\n    \"tipo\": \"diario\",\n    \"intervalos\": [\n        {\n            \"inicio\": \"9:30\",\n            \"fim\": \"11:00\"\n        }\n        \n       \n        \n        ]\n}\n\t\n\t\t\n     \n"
 				},
 				"url": {
 					"raw": "http://localhost:4200/atendimento/",
@@ -155,7 +155,7 @@
 			"response": []
 		},
 		{
-			"name": "atendimento semanal",
+			"name": "Atendimento Semanal",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -168,7 +168,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\n{\n    \"tipo\": \"semanal\",\n    \"dia\":[\"segunda\",\"quarta\"],\n    \"intervalos\": [\n        {\n            \"inicio\": \"13:30\",\n            \"fim\": \"14:00\"\n        }\n        \n       \n        \n        ]\n}\n\t\n\t\t\n     \n"
+					"raw": "\n{\n    \"tipo\": \"semanal\",\n    \"dia\":[\"segunda\",\"quarta\"],\n    \"intervalos\": [\n        {\n            \"inicio\": \"09:30\",\n            \"fim\": \"11:00\"\n        }\n        \n       \n        \n        ]\n}\n\t\n\t\t\n     \n"
 				},
 				"url": {
 					"raw": "http://localhost:4200/atendimento/",
@@ -186,7 +186,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:4200/atendimento/remover",
+			"name": "Deletar",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -247,7 +247,7 @@
 			]
 		},
 		{
-			"name": "http://localhost:4200/atendimento/consultar-atendimento",
+			"name": "Buscar por periodo",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -260,7 +260,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\n\t\t\t\"inicio\":\"21-04-2019\",\n\t\t\t\"fim\":\"25-04-2019\"\n\t\n\t\n\t\n}"
+					"raw": "{\n\n\t\t\t\"inicio\":\"27-04-2019\",\n\t\t\t\"fim\":\"29-04-2019\"\n\t\n\t\n\t\n}"
 				},
 				"url": {
 					"raw": "http://localhost:4200/atendimento/consultar-atendimento",
