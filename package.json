@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/jasmine-node test/",
     "start": "node_modules/.bin/nodemon dist/app"
   },
   "author": "",
@@ -13,11 +12,12 @@
     "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
     "gulp-typescript": "3.2.2",
+    "jasmine": "^3.3.1",
     "nodemon": "^1.18.10",
+    "request": "^2.88.0",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "jasmine-node": "^1.16.2",
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "rxjs": "^6.4.0",
