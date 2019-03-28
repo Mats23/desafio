@@ -21,11 +21,6 @@ export class AtendimentoController  {
         return this.atendimentoService.createNewAtendimentoEspecifico(atendimento);
     }
 
-    // @POST
-    // @Path('dairio')
-    // createAtendimentoDiario(atendimento:AtendimentoEspecifico):AtendimentoEspecifico | string {
-    //     return this.atendimentoService.createNewAtendimentoDiario(atendimento);
-    // }
 
     @DELETE
     @Path('remover')

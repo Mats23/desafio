@@ -19,7 +19,7 @@ export class AtendimentoService extends AbstractDb {
 
     createNewAtendimentoEspecifico(atendimento:Atendimento):Atendimento | string {
         atendimento.id = this.gerarId();
-        if(this.getAll().length === 0 ) {
+        if(this.getAll() === undefined ) {
             return this.createMethod('atendimento',atendimento);
         }
         if(atendimento.tipo === TipoEnum.especifico) {
@@ -82,7 +82,7 @@ export class AtendimentoService extends AbstractDb {
 
 
     private verificarDisponibilidade(atendimento:Atendimento) {
-        const data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY')
+        const data = moment(atendimento.data,'DD-MM-YYYY').format('DD-MM-YYYY');
         return this.findByDataMethod(data);
                 
     }
@@ -92,18 +92,31 @@ export class AtendimentoService extends AbstractDb {
         if( listDb === undefined) {
             return;
         }
-       return atendimento.intervalos.map(intervalo => {
+        const intervaloDb = this.getIntervalosMethod(atendimento.intervalos);
+        if(atendimento.data !== undefined) {
+            console.dir(this.verificarDisponibilidade(atendimento));
+            return this.findByDataMethod(atendimento.data) === undefined?this.verificaIntervalos(atendimento,listDb):true;
+        }
+        if(intervaloDb.length > 0) {
+            return true;
+        }
+        return this.verificaIntervalos(atendimento,listDb);
+
+}
+
+    private verificaIntervalos(atendimento, listDb) {
+        return atendimento.intervalos.map(intervalo => {
             return listDb.map(atendimentoDb => {
                 return  atendimentoDb.intervalos.map(intervaloDb => {
-                    let inicioDb = moment(intervaloDb.inicio,'HH:mm');
-                    let fimDb = moment(intervaloDb.fim,'HH:mm');       
-                    return this.moment.range(inicioDb,fimDb).contains(moment(intervalo.inicio,'HH:mm')) || this.moment.range(inicioDb,fimDb).contains(moment(intervalo.fim,'HH:mm'));
-                })
-                
+                    const inicioDb = moment(intervaloDb.inicio,'HH:mm');
+                    const fimDb = moment(intervaloDb.fim,'HH:mm');  
+                    const  horaValida = moment(intervalo.inicio,'HH:mm').isSameOrAfter(inicioDb) && moment(intervalo.fim,'HH:mm').isSameOrBefore(fimDb) ;
+                    const intervaloValido = moment(intervalo.inicio,'HH:mm').isSameOrBefore(inicioDb) && moment(intervalo.fim,'HH:mm').isBetween(inicioDb,fimDb); 
+                    if(horaValida || intervaloValido) {
+                        return true;
+                    }
+                })   
             });
-        }).reduce(reducer => { return reducer})
-            .reduce(reducer => { return reducer})
-                .reduce(reducer => { return reducer});
-                    
+     }).reduce(reducer => { return reducer})[0][0];
     }
 }
