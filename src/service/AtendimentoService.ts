@@ -2,14 +2,12 @@ import {AbstractDb} from "../db/AbstractDb";
 import  {Atendimento } from "../models/Atendimento";
 import {Intervalo} from "../models/Intervalo";
 import * as moment from "moment";
-import * as MomentRange from "moment-range";
 import {TipoEnum} from "../enum/TipoEnum";
 
 export class AtendimentoService extends AbstractDb {
 
     private atendimentoList: Atendimento[] = [];
     private atendimentoDb: Atendimento;
-    private moment = MomentRange.extendMoment(moment);
 
     private datas:Atendimento[] = [];
 
@@ -50,8 +48,7 @@ export class AtendimentoService extends AbstractDb {
     getAtendimentoFilter(intervalo:Intervalo) {
         this.atendimentoList = this.getDiaDisponiveisMethod();
         this.atendimentoList.filter(atendimento => { 
-             return atendimento.data !== undefined})
-        .map(atendimento => {
+             return atendimento.data !== undefined}).map(atendimento => {
             const inicio = moment(intervalo.inicio,'DD-MM-YYYY');
             const fim = moment(intervalo.fim,'DD-MM-YYYY');
             const datas = moment(atendimento.data,'DD-MM-YYYY');

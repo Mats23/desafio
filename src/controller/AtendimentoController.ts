@@ -24,8 +24,8 @@ export class AtendimentoController  {
 
     @DELETE
     @Path('remover')
-    removeAtendimento(data:string) {
-        return this.atendimentoService.remover(data);
+    removeAtendimento(id:string) {
+        return this.atendimentoService.remover(id);
     }
 
     @POST
